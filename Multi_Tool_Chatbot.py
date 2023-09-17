@@ -37,9 +37,6 @@ from langchain.callbacks.tracers.langchain import wait_for_all_tracers
 from random import randint
 from custom_eval import RelevanceEvaluator
 
-client = Client()
-our_evaluator = RelevanceEvaluator()
-
 # these are the environment variables that need to be set for LangSmith to work
 os.environ["LANGCHAIN_PROJECT"] = "Multi Tool Chatbot"
 os.environ["LANGCHAIN_TRACING_V2"] = "true"
@@ -63,6 +60,8 @@ def new_chat():
 
 
 def main():
+    client = Client()
+    our_evaluator = RelevanceEvaluator()
     st.subheader(
         "AI Asistent je povezan na internet i Positive portfolio i moze da odgovara na pitanja o Positive AI asistentu, Positive doo i njihovom portfoliu, i na pitanja o aktuelnim dogadjajima."
     )
