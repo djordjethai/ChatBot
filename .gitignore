@@ -1,5 +1,7 @@
 *.txt
 !requirements.txt
+!odgovor_turbo.txt
+!prompt_turbo.txt
 *.json
 *.exe
 *.mp3
