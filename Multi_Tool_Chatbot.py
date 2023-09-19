@@ -35,7 +35,7 @@ from langsmith import Client
 from streamlit_feedback import streamlit_feedback
 from langchain.callbacks.tracers.langchain import wait_for_all_tracers
 from random import randint
-from custom_eval import RelevanceEvaluator
+# from custom_eval import RelevanceEvaluator
 
 # these are the environment variables that need to be set for LangSmith to work
 os.environ["LANGCHAIN_PROJECT"] = "Multi Tool Chatbot"
@@ -61,7 +61,7 @@ def new_chat():
 
 def main():
     client = Client()
-    our_evaluator = RelevanceEvaluator()
+    # our_evaluator = RelevanceEvaluator()
     st.subheader(
         "AI Asistent je povezan na internet i Positive portfolio i moze da odgovara na pitanja o Positive AI asistentu, Positive doo i njihovom portfoliu, i na pitanja o aktuelnim dogadjajima."
     )
@@ -254,13 +254,14 @@ def main():
             st.session_state.past.append(f"{name}: {upit}")
             st.session_state.generated.append(f"AI Asistent: {output_text}")
 
+            x = """
             pitanje_za_evaluator = pitanje.split("\n")[2]
             eval = our_evaluator.evaluate_strings(
                 prediction=output_text, input=pitanje_za_evaluator
             )
             st.session_state.our_score = eval["score"]
             st.session_state.our_reasoning = eval["reasoning"]
-
+            """
             # Calculate the length of the list
             num_messages = len(st.session_state["generated"])
 
@@ -323,7 +324,7 @@ def main():
         client.update_feedback(feedback_id, **feedback_update)
         st.image(
             "https://test.georgemposi.com/wp-content/uploads/2023/05/positive-logo-red.jpg",
-            caption="Neki tekst ako ima smisla ovde staviti.",
+            caption="Helloooouuu!",
             width=150,
         )
         x = ["🎭", "🐯", "👺", "👻", "😸", "🤓", "🤡", "🦄", "🧟‍♀️", "☘️"]
