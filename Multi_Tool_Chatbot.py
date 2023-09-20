@@ -63,10 +63,10 @@ def main():
     client = Client()
     # our_evaluator = RelevanceEvaluator()
     st.subheader(
-        "AI Asistent je povezan na internet i Positive portfolio i moze da odgovara na pitanja o Positive AI asistentu, Positive doo i njihovom portfoliu, i na pitanja o aktuelnim dogadjajima."
+        "AI Asistent je povezan na internet i Positive portfolio i može da odgovara na pitanja o Positive AI asistentu, Positive doo i njihovom portfoliu, i na pitanja o aktuelnim događajima."
     )
     st.info(
-        "Mozete birati model i temperaturu, a bice prikazan i streaming output. Moguc je i Download chata. Ako menjate temu, bolje je odabrati opciju New Chat"
+        "Mozete birati model i temperaturu, a biće prikazan i streaming izlaz. Moguć je i Download chata. Ako menjate temu, bolje je odabrati opciju New Chat"
     )
 
     # Initialize session states
