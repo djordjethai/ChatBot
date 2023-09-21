@@ -39,6 +39,8 @@ os.environ["LANGCHAIN_TRACING_V2"] = "true"
 os.environ["LANGCHAIN_ENDPOINT"] = "https://api.langchain.plus"
 os.environ.get("LANGCHAIN_API_KEY")
 
+version = "21.09.23."
+
 st.set_page_config(
     page_title="Multi Tool Chatbot",
     page_icon="👉",
@@ -59,6 +61,7 @@ def new_chat():
     st.session_state["messages"] = []
 
 def main():
+    st.markdown(f"<p style='font-size: 10px; color: grey;'>{version}</p>", unsafe_allow_html=True)
     st.subheader("""
                  AI Asistent 🧠 je povezan na internet i Positive portfolio i može da odgovara na pitanja o Positive AI asistentu, Positive d.o.o. i njihovom portfoliu, kao i na pitanja o aktuelnim događajima.
                  """)
