@@ -10,7 +10,8 @@ from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.agents import Tool, AgentType, initialize_agent
 from langchain.chains import RetrievalQA
 from langchain.chat_models import ChatOpenAI
-from langchain.utilities.google_search import GoogleSearchAPIWrapper
+# from langchain.utilities.google_search import GoogleSearchAPIWrapper
+from langchain.utilities import GoogleSerperAPIWrapper
 from langchain.memory import ConversationBufferMemory
 from langchain.prompts import ChatPromptTemplate, SystemMessagePromptTemplate, HumanMessagePromptTemplate
 
@@ -128,9 +129,10 @@ def main():
         st.session_state.PINECONE_API_KEY = os.environ.get('PINECONE_API_KEY')
     if "PINECONE_API_ENV" not in st.session_state:
         st.session_state.PINECONE_API_ENV = os.environ.get('PINECONE_API_ENV')
-    if "GOOGLE_API_KEY" not in st.session_state:
+    if "SERPER_API_KEY" not in st.session_state:
         # Retrieving API keys from env
-        st.session_state.GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
+        st.session_state.GOOGLE_API_KEY = os.environ.get("SERPER_API_KEY")
+        # st.session_state.SERPER_API_KEY = os.environ.get("GOOGLE_API_KEY")
     if "GOOGLE_CSE_ID" not in st.session_state:
         st.session_state.GOOGLE_CSE_ID = os.environ.get("GOOGLE_CSE_ID")
         # Initializing OpenAI and Pinecone APIs
@@ -210,7 +212,7 @@ def main():
         )
     if "search" not in st.session_state:
         # initializing tools internet search
-        st.session_state.search = GoogleSearchAPIWrapper()
+        st.session_state.search = GoogleSerperAPIWrapper()
         # initialize agent tools
     if "tools" not in st.session_state:
         st.session_state.tools = [
