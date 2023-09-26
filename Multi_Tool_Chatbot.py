@@ -191,8 +191,8 @@ def main():
         temperature=temp,
         model=model,
         streaming=True,
-        callbacks=[FinalStreamingStdOutCallbackHandler()]
-        # callbacks=[st.session_state.stream_handler]
+        # callbacks=[FinalStreamingStdOutCallbackHandler()]
+        callbacks=[st.session_state.stream_handler]
     )
     upit = []
 
