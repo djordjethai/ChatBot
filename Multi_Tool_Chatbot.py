@@ -340,7 +340,7 @@ def main():
             width=150)
         x = ["🎭", "🐯", "👺", "👻", "😸", "🤓", "🤡", "🦄", "🧟‍♀️", "☘️"]
         st.write(f"{x[randint(0, len(x) - 1)]} Ova aplikacija radi iterativno - možete odmah ukucati naredno pitanje!")
-        client.create_feedback(st.session_state.run_id, "our_evaluation", score=st.session_state.our_score, comment=st.session_state.our_reasoning)
+        # client.create_feedback(st.session_state.run_id, "our_evaluation", score=st.session_state.our_score, comment=st.session_state.our_reasoning)
 
         st.session_state.feedback = None
         st.session_state.feedback_update = None
