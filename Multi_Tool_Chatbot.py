@@ -24,6 +24,7 @@ from myfunc.mojafunkcija import (
     init_cond_llm,
     open_file,
 )
+from langchain.callbacks.streaming_stdout_final_only import FinalStreamingStdOutCallbackHandler
 from langchain.callbacks.tracers.run_collector import RunCollectorCallbackHandler
 from langchain.schema.runnable import RunnableConfig
 from langsmith import Client
@@ -40,18 +41,13 @@ os.environ["LANGCHAIN_TRACING_V2"] = "true"
 os.environ["LANGCHAIN_ENDPOINT"] = "https://api.langchain.plus"
 os.environ.get("LANGCHAIN_API_KEY")
 
-version = "21.09.23."
+version = "26.09.23."
 
 st.set_page_config(
     page_title="Multi Tool Chatbot",
     page_icon="👉",
     layout="wide"
 )
-
-
-def whoami(input=""):
-    """Positive AI asistent"""
-    return ("Positive doo razvija AI Asistenta. U ovaj odgovor mozemo dodati bilo koji tekst.")
 
 
 def new_chat():
@@ -195,6 +191,7 @@ def main():
         temperature=temp,
         model=model,
         streaming=True,
+        # callbacks=[FinalStreamingStdOutCallbackHandler()]
         callbacks=[st.session_state.stream_handler]
     )
     upit = []
@@ -227,11 +224,6 @@ def main():
                 verbose=False,
                 description="Useful for when you are asked about topics including Positive doo and their portfolio. Input should be a topic you want to lookup.",
                 return_direct=True
-            ),
-            Tool(
-                name="Positive AI asistent",
-                func=whoami,
-                description="Useful for when you need to answer questions about Positive AI asistent. Input should be Positive AI asistent "
             ),
         ]
 
