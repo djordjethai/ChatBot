@@ -196,12 +196,15 @@ def main():
             st.session_state.sistem = open_file("prompt_turbo_miljan.txt")
         else:
             st.session_state.sistem = load_data()
-        prikaz = st.session_state.sistem.encode("utf-8").decode("utf-8")
+    if "prikaz" not in st.session_state:
+        st.session_state.prikaz = st.session_state.sistem.encode("utf-8").decode(
+            "utf-8"
+        )
         with st.expander(
             "Otvorite da vidite System Prompt. Menaj se u aplikaciji za promenu. Posle promene morate uraditi refresh ove aplikacije u browseru",
             expanded=False,
         ):
-            st.caption(prikaz)
+            st.caption(st.session_state.prikaz)
     if "odgovor" not in st.session_state:
         st.session_state.odgovor = open_file("odgovor_turbo.txt")
     if "system_message_prompt" not in st.session_state:
