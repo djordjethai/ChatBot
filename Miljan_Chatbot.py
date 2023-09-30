@@ -39,9 +39,15 @@ from streamlit_feedback import streamlit_feedback
 from langchain.callbacks.tracers.langchain import wait_for_all_tracers
 from random import randint
 
+from azure.storage.blob import BlobServiceClient
+
 # from custom_eval import RelevanceEvaluator
 # our_evaluator = RelevanceEvaluator()
 client = Client()
+
+filename = "prompt_turbo_miljan.txt"
+container_name = "positive-user"
+constr = os.environ.get("AZ_BLOB_API_KEY")
 
 # these are the environment variables that need to be set for LangSmith to work
 os.environ["LANGCHAIN_PROJECT"] = "Multi Tool Chatbot"
@@ -52,6 +58,19 @@ os.environ.get("LANGCHAIN_API_KEY")
 version = "26.09.23."
 
 st.set_page_config(page_title="Multi Tool Chatbot", page_icon="👉", layout="wide")
+
+
+def load_data():
+    try:
+        blob_service_client = BlobServiceClient.from_connection_string(constr)
+        container_client = blob_service_client.get_container_client(container_name)
+        blob_client = container_client.get_blob_client(filename)
+
+        streamdownloader = blob_client.download_blob()
+        data = streamdownloader.readall().decode("utf-8")
+        return data
+    except FileNotFoundError:
+        return {"Nisam pronasao fajl"}
 
 
 def new_chat():
@@ -173,13 +192,23 @@ def main():
             memory_key="chat_history", return_messages=True
         )
     if "sistem" not in st.session_state:
-        st.session_state.sistem = open_file("prompt_turbo_miljan.txt")
+        if deployment_environment == "Streamlit":
+            st.session_state.sistem = open_file("prompt_turbo_miljan.txt")
+        else:
+            st.session_state.sistem = load_data()
+        prikaz = st.session_state.sistem.encode("utf-8").decode("utf-8")
+        with st.expander(
+            "Otvorite da vidite System Prompt. Menaj se u aplikaciji za promenu. Posle promene morate uraditi refresh ove aplikacije u browseru",
+            expanded=False,
+        ):
+            st.caption(prikaz)
     if "odgovor" not in st.session_state:
         st.session_state.odgovor = open_file("odgovor_turbo.txt")
     if "system_message_prompt" not in st.session_state:
         st.session_state.system_message_prompt = (
             SystemMessagePromptTemplate.from_template(st.session_state.sistem)
         )
+
     if "human_message_prompt" not in st.session_state:
         st.session_state.human_message_prompt = (
             HumanMessagePromptTemplate.from_template("{text}")
