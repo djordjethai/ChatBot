@@ -7,20 +7,18 @@ from langchain.evaluation import StringEvaluator
 class RelevanceEvaluator(StringEvaluator):
     def __init__(self):
         llm = ChatOpenAI(model="gpt-4", temperature=0)
-        # self.sistem_prompt = "Write only in the Serbian language."
+        
         prompt = """On a scale from 1 to 5, how correct is the following response to the input:
         -------- INPUT: {input}
         -------- OUTPUT: {prediction}
-        -------- While evaluating the response act as if you were a mathematician.
-        -------- Check if the provided information is true or not.
-        -------- Reason step by step about why the score is appropriate, then print the score at the end. At the end, repeat that score alone on a new line."""
+        -------- Reason step by step about why the score is appropriate. At the end of your response, repeat that score alone on a new line."""
         self.eval_chain = LLMChain.from_string(llm=llm, template=prompt)
 
     @property
     def requires_input(self) -> bool:
         return True
 
-    @property
+    @property   # ostaje zbog interne logike StringEvaluator-a
     def requires_reference(self) -> bool:
         return False
 
@@ -32,7 +30,6 @@ class RelevanceEvaluator(StringEvaluator):
         self,
         prediction: str,
         input: Optional[str] = None,
-        reference: Optional[str] = None,
         **kwargs: Any
     ) -> dict:
         evaluator_result = self.eval_chain(
@@ -41,6 +38,5 @@ class RelevanceEvaluator(StringEvaluator):
         )
         reasoning, score = evaluator_result["text"].split("\n", maxsplit=1)
         score = search(r"\d+", score).group(0)
-        if score is not None:
-            score = float(score.strip())
+        score = float(score.strip()) if score is not None else 42
         return {"score": score, "reasoning": reasoning.strip()}
