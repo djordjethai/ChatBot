@@ -55,7 +55,7 @@ os.environ["LANGCHAIN_TRACING_V2"] = "true"
 os.environ["LANGCHAIN_ENDPOINT"] = "https://api.langchain.plus"
 os.environ.get("LANGCHAIN_API_KEY")
 
-version = "26.09.23."
+version = "19.10.23."
 
 st.set_page_config(page_title="Multi Tool Chatbot", page_icon="👉", layout="wide")
 
