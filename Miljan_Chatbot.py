@@ -177,7 +177,7 @@ def main():
         # Setting index name
         st.session_state.index = pinecone.Index("embedings1")
     if "name_space" not in st.session_state:
-        st.session_state.name_space = "positive"
+        st.session_state.name_space = "miljan"
     if "text_field" not in st.session_state:
         st.session_state.text_field = "text"
     if "vectorstore" not in st.session_state:
